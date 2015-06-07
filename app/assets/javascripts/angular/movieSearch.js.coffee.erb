@@ -2,6 +2,8 @@
 
 @movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.controllers'])
 
+@movieSearch.constant("MOVIE_API", "http://www.omdbapi.com/?")
+
 @movieSearch.config(['$routeProvider', ($routeProvider)->
   $routeProvider.
     otherwise({
