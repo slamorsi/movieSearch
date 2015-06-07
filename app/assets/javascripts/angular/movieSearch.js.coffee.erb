@@ -7,27 +7,56 @@ window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.cont
 
 .config(['$routeProvider', ($routeProvider)->
   $routeProvider
+    .when('/search/movies/:query', {
+      templateUrl: '<%= asset_path("search.html") %>',
+      controller: 'SearchCtrl',
+      resolve: {
+        query: ['$route', ($route)->
+          return $route.current.params.query
+        ],
+        movies: ['$route', '$q', 'MOVIE_API', '$http', ($route, $q, MOVIE_API, $http)->
+          deferred = $q.defer();
+          $http.get(MOVIE_API+"s="+$route.current.params.query).success( (data) ->
+            #Title, Type, Year, imdbID
+            deferred.resolve(data.Search)
+            console.log('Successfully loaded movies.')
+          ).error( ->
+            deferred.reject()
+            console.error('Failed to load movies.')
+            #bonus show in UI
+          )
+
+          return deferred.promise
+        ]
+      }
+    })
     .when('/movies/:id', {
       templateUrl: '<%= asset_path("movie.html") %>'
       controller: 'MovieShowCtrl',
       resolve: {
         movie: ['$route', '$q', 'MOVIE_API', '$http', ($route, $q, MOVIE_API, $http)->
-            deferred = $q.defer();
-            $http.get(MOVIE_API+"i="+$route.current.params.id).success( (data) ->
-              deferred.resolve(data)
-              console.log('Successfully loaded movie.')
-            ).error( ->
-              deferred.reject()
-              console.error('Failed to load movie.')
-              #bonus show in UI
-            )
-            
-            return deferred.promise
+          deferred = $q.defer();
+          $http.get(MOVIE_API+"i="+$route.current.params.id).success( (data) ->
+            deferred.resolve(data)
+            console.log('Successfully loaded movie.')
+          ).error( ->
+            deferred.reject()
+            console.error('Failed to load movie.')
+            #bonus show in UI
+          )
+          
+          return deferred.promise
         ]
       }
     })
     .otherwise({
       templateUrl: '<%= asset_path("search.html") %>',
       controller: 'SearchCtrl'
+      resolve: {
+        query: ()->
+          return undefined
+        movies: ()->
+          return []
+      }
     })
 ])
