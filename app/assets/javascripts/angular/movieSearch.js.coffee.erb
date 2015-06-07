@@ -1,0 +1,11 @@
+#= depend_on_asset "search.html"
+
+@movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.controllers'])
+
+@movieSearch.config(['$routeProvider', ($routeProvider)->
+  $routeProvider.
+    otherwise({
+      templateUrl: '<%= asset_path("search.html") %>',
+      controller: 'SearchCtrl'
+    })
+])
