@@ -1,12 +1,32 @@
 #= depend_on_asset "search.html"
+#= depend_on_asset "movie.html"
 
-@movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.controllers'])
+window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.controllers'])
 
-@movieSearch.constant("MOVIE_API", "http://www.omdbapi.com/?")
+.constant("MOVIE_API", "http://www.omdbapi.com/?")
 
-@movieSearch.config(['$routeProvider', ($routeProvider)->
-  $routeProvider.
-    otherwise({
+.config(['$routeProvider', ($routeProvider)->
+  $routeProvider
+    .when('/movies/:id', {
+      templateUrl: '<%= asset_path("movie.html") %>'
+      controller: 'MovieShowCtrl',
+      resolve: {
+        movie: ['$route', '$q', 'MOVIE_API', '$http', ($route, $q, MOVIE_API, $http)->
+            deferred = $q.defer();
+            $http.get(MOVIE_API+"i="+$route.current.params.id).success( (data) ->
+              deferred.resolve(data)
+              console.log('Successfully loaded movie.')
+            ).error( ->
+              deferred.reject()
+              console.error('Failed to load movie.')
+              #bonus show in UI
+            )
+            
+            return deferred.promise
+        ]
+      }
+    })
+    .otherwise({
       templateUrl: '<%= asset_path("search.html") %>',
       controller: 'SearchCtrl'
     })

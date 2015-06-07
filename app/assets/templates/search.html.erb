@@ -6,9 +6,10 @@
     <label for= "movieSearchTitle">Title</label>
     <input type="search" class="form-controler" id="movieSearchTitle" ng-model="movieSearchTitle"/>
   </div>
+  <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
-<table class="table table-striped col-12">
+<table class="table table-striped col-12 moviesIndex">
   <thead>
     <tr>
       <th>Type</th>
@@ -16,7 +17,7 @@
       <th>Year</th>
     </tr>
   <tbody>
-    <tr ng-repeat="movie in data.movies track by movie.imdbID">
+    <tr ng-repeat="movie in data.movies track by movie.imdbID" ng-click="showMovie(movie.imdbID)">
       <th>{{ movie.Type }}</th>
       <th>{{ movie.Title }}</th>
       <th>{{ movie.Year }}</th>
