@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="movieSearch">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Movie Search" %></title>
@@ -13,8 +13,8 @@
       <%= render 'layouts/navigation' %>
     </header>
     <main role="main">
-       <%= render 'layouts/messages' %>
-       <%= yield %>
+      <%= render 'layouts/messages' %>
+      <%= yield %>
     </main>
   </body>
 </html>
