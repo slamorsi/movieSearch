@@ -15,12 +15,14 @@
       <th>Type</th>
       <th>Title</th>
       <th>Year</th>
+      <th>Favorite</th>
     </tr>
   <tbody>
     <tr ng-repeat="movie in data.movies track by movie.imdbID" ng-click="showMovie(movie.imdbID)">
       <th>{{ movie.Type }}</th>
       <th>{{ movie.Title }}</th>
       <th>{{ movie.Year }}</th>
+      <th><span class="favorite glyphicon {{ isFavorite(movie.imdbID) ? 'glyphicon-star' : 'glyphicon-star-empty' }}" ng-click="setFavorite($event, movie)"></span>
     </tr>
   </tbody>
 </table>

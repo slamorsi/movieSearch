@@ -1,0 +1,11 @@
+<table class="table table-striped col-12 moviesIndex">
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  <tbody>
+    <tr ng-repeat="movie in favorites track by movie.imdb_id" ng-click="showMovie(movie.imdb_id)">
+      <th>{{ movie.title }}</th>
+    </tr>
+  </tbody>
+</table>

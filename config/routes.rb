@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :favorites
+
   root 'search#index'
 
   get '/auth/:provider/callback' => 'sessions#create'

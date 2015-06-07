@@ -1,12 +1,35 @@
 #= depend_on_asset "search.html"
 #= depend_on_asset "movie.html"
-
+user_signed_in = window.user_signed_in
 window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.controllers'])
 
 .constant("MOVIE_API", "http://www.omdbapi.com/?")
-
+.run( ($rootScope)->
+  $rootScope.user_signed_in = user_signed_in
+)
+#bonus extract api calls to a service
 .config(['$routeProvider', ($routeProvider)->
   $routeProvider
+    .when('/favorites', {
+      templateUrl: '<%= asset_path("favorites_index.html") %>',
+      controller: 'FavoritesIndexCtrl',
+      resolve: {
+        favorites: ['$route', '$q', '$http', ($route, $q, $http)->
+          deferred = $q.defer();
+          $http.get('/favorites.json').success( (data) ->
+            #Title, Type, Year, imdbID
+            deferred.resolve(data)
+            console.log('Successfully loaded favorites.')
+          ).error( ->
+            deferred.reject()
+            console.error('Failed to load favorites.')
+            #bonus show in UI
+          )
+
+          return deferred.promise
+        ]
+      }
+    })
     .when('/search/movies/:query', {
       templateUrl: '<%= asset_path("search.html") %>',
       controller: 'SearchCtrl',
@@ -25,6 +48,23 @@ window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.cont
             console.error('Failed to load movies.')
             #bonus show in UI
           )
+
+          return deferred.promise
+        ],
+        favorites: ['$route', '$q', '$http', ($route, $q, $http)->
+          deferred = $q.defer();
+          if(user_signed_in)
+            $http.get('/favorites.json').success( (data) ->
+              #Title, Type, Year, imdbID
+              deferred.resolve(data)
+              console.log('Successfully loaded favorites.')
+            ).error( ->
+              deferred.reject()
+              console.error('Failed to load favorites.')
+              #bonus show in UI
+            )
+          else
+            deferred.reject()
 
           return deferred.promise
         ]
@@ -56,6 +96,8 @@ window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.cont
         query: ()->
           return undefined
         movies: ()->
+          return []
+        favorites: ()->
           return []
       }
     })

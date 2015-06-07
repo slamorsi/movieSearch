@@ -5,6 +5,9 @@
     <title><%= content_for?(:title) ? yield(:title) : "Movie Search" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Movie Search" %>">
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <script>
+      user_signed_in = <%= user_signed_in? %>;
+    </script>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
   </head>

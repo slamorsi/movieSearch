@@ -1,5 +1,11 @@
 table.moviesIndex{
   tbody > tr{
     cursor: pointer;
+    th{
+      padding: 15px;
+    }
+    .favorite {
+
+    }
   }
 }
