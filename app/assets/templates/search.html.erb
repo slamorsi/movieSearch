@@ -9,6 +9,9 @@
   <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
+<div class="alert alert-info" role="alert" ng-show="!finishedLoading">Loading...</div>
+
+
 <table class="table table-striped col-12 moviesIndex">
   <thead>
     <tr>
@@ -22,7 +25,7 @@
       <th>{{ movie.Type }}</th>
       <th>{{ movie.Title }}</th>
       <th>{{ movie.Year }}</th>
-      <th><span class="favorite glyphicon {{ isFavorite(movie.imdbID) ? 'glyphicon-star' : 'glyphicon-star-empty' }}" ng-click="setFavorite($event, movie)"></span>
+      <th><span class="favorite glyphicon {{ isFavorite(movie.imdbID) ? 'glyphicon-star' : 'glyphicon-star-empty' }}" ng-click="toggleFavorite($event, movie)"></span>
     </tr>
   </tbody>
 </table>

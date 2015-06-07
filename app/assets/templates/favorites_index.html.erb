@@ -2,10 +2,12 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Favorite</th>
     </tr>
   <tbody>
-    <tr ng-repeat="movie in favorites track by movie.imdb_id" ng-click="showMovie(movie.imdb_id)">
-      <th>{{ movie.title }}</th>
+    <tr ng-repeat="favorite in favorites track by favorite.id" ng-click="showMovie(favorite.imdb_id)">
+      <th>{{ favorite.title }}</th>
+      <th><span class="favorite glyphicon glyphicon-star" ng-click="toggleFavorite($event, favorite)"></span>
     </tr>
   </tbody>
 </table>
