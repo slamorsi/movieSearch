@@ -1,3 +1,56 @@
 <div>
   <div class="alert alert-danger" role="alert" ng-show="movie.Error">There was an error loading this movie</div>
+  <div class="well media">
+    <div class="media-left">
+      <a href="{{movie.Poster}}">
+        <img src="{{movie.Poster}}"/>
+      </a>
+  </div>
+  <div class='media-body'>
+    <h2 class='media-heading'>
+      {{ movie.Title }}
+      <small>{{movie.Type}}: {{ movie.Year }}, Released: {{ movie.Released }}. </small>
+      <small>Metascore: {{ movie.Meta }}, IMDB Rating: {{ movie.imdbRating }}.</small>
+    </h4>
+    <dl class = "dl-horizontal">
+      <dt>Director</dt>
+      <dd>{{movie.Director}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Writer</dt>
+      <dd>{{movie.Writer}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Actors</dt>
+      <dd>{{movie.Actors}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Plot</dt>
+      <dd><p>{{movie.Plot}}</p></dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Runtime</dt>
+      <dd>{{movie.Runtime}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Rated</dt>
+      <dd>{{movie.Rated}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Genre</dt>
+      <dd>{{movie.Genre}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Lanuage</dt>
+      <dd>{{movie.Language}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Country</dt>
+      <dd>{{movie.Country}}</dd>
+    </dl>
+    <dl class = "dl-horizontal">
+      <dt>Awards</dt>
+      <dd>{{movie.Awards}}</dd>
+    </dl>
+  </div>    
 </div>
