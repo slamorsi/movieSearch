@@ -15,18 +15,20 @@ window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.cont
       controller: 'FavoritesIndexCtrl',
       resolve: {
         favorites: ['$route', '$q', '$http', ($route, $q, $http)->
-          deferred = $q.defer();
-          $http.get('/favorites.json').success( (data) ->
-            #Title, Type, Year, imdbID
-            deferred.resolve(data)
-            console.log('Successfully loaded favorites.')
-          ).error( ->
-            deferred.reject()
-            console.error('Failed to load favorites.')
-            #bonus show in UI
-          )
-
-          return deferred.promise
+          if(user_signed_in)
+            deferred = $q.defer();
+            $http.get('/favorites.json').success( (data) ->
+              #Title, Type, Year, imdbID
+              deferred.resolve(data)
+              console.log('Successfully loaded favorites.')
+            ).error( ->
+              deferred.reject()
+              console.error('Failed to load favorites.')
+              #bonus show in UI
+            )
+            return deferred.promise
+          else
+            return []
         ]
       }
     })
@@ -52,8 +54,9 @@ window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.cont
           return deferred.promise
         ],
         favorites: ['$route', '$q', '$http', ($route, $q, $http)->
-          deferred = $q.defer();
+
           if(user_signed_in)
+            deferred = $q.defer();
             $http.get('/favorites.json').success( (data) ->
               #Title, Type, Year, imdbID
               deferred.resolve(data)
@@ -63,10 +66,10 @@ window.movieSearch = angular.module('movieSearch', ['ngRoute', 'movieSearch.cont
               console.error('Failed to load favorites.')
               #bonus show in UI
             )
+            return deferred.promise
           else
-            deferred.reject()
+            return []
 
-          return deferred.promise
         ]
       }
     })

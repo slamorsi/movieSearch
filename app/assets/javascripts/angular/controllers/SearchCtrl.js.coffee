@@ -9,6 +9,7 @@ module.controller 'SearchCtrl', ['$scope', '$rootScope', '$route', '$location', 
   $scope.favorites = favorites
   $scope.onSearchMovies = ()->
 
+    $scope.finishedLoading = false
     if($scope.movieSearchTitle)
       $location.path("/search/movies/"+$scope.movieSearchTitle)
       $route.reload()
